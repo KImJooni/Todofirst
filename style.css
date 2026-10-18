@@ -1,0 +1,308 @@
+/* 기본 초기화 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 화면 전체를 중앙 정렬 */
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 16px;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: linear-gradient(135deg, #ffe4ec 0%, #e3f0ff 100%);
+  color: #4a4a68;
+}
+
+/* 메인 카드 */
+.card {
+  width: 100%;
+  max-width: 500px;
+  padding: 32px 28px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 12px 32px rgba(180, 140, 200, 0.25);
+}
+
+.title {
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 1.8rem;
+  color: #ff7aa2;
+}
+
+/* 입력창 + 추가 버튼 */
+.todo-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+/* 날짜 선택 버튼 (한 줄 전체 차지) */
+.date-picker {
+  position: relative;
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-date {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  color: #7a6a9a;
+  background: #f4efff;
+  border: 2px solid #e6dcff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-date:hover {
+  background: #ebe2ff;
+}
+
+/* 실제 date 입력은 숨기고 달력 창만 사용 */
+.date-input {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.todo-input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid #f1e4f3;
+  border-radius: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.todo-input:focus {
+  border-color: #ffb3c8;
+}
+
+.btn-add {
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background: #ff8fb1;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-add:hover {
+  background: #ff7aa2;
+}
+
+.btn-add:active {
+  transform: scale(0.96);
+}
+
+/* 필터 상태 + 개수 표시 줄 */
+.todo-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* 날짜 필터가 켜져 있을 때 표시 */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #7a6a9a;
+}
+
+.filter-bar[hidden] {
+  display: none;
+}
+
+/* 날짜 선택 버튼 옆의 전체 보기 버튼 */
+.btn-filter-clear {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  color: #7a6a9a;
+  background: #ffffff;
+  border: 2px solid #e6dcff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-filter-clear[hidden] {
+  display: none;
+}
+
+.btn-filter-clear:hover {
+  background: #ebe2ff;
+}
+
+/* 할 일 개수 표시 */
+.todo-count {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: #9a8fb8;
+  text-align: right;
+}
+
+.todo-count strong {
+  color: #ff7aa2;
+}
+
+/* 상태 필터 탭 */
+.status-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 4px;
+  background: #f8f4fb;
+  border-radius: 14px;
+}
+
+.btn-tab {
+  flex: 1;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: #9a8fb8;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-tab:hover {
+  color: #7a6a9a;
+}
+
+/* 현재 선택된 필터 강조 */
+.btn-tab.active {
+  font-weight: bold;
+  color: #ffffff;
+  background: #ff8fb1;
+  box-shadow: 0 2px 6px rgba(255, 143, 177, 0.35);
+}
+
+/* 할 일 목록 */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 목록이 비어 있을 때 안내 문구 */
+.todo-list:empty::before {
+  content: "아직 할 일이 없어요 🌱";
+  display: block;
+  padding: 24px 0;
+  text-align: center;
+  color: #b8b0c8;
+}
+
+/* 할 일 항목 카드 */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff7fa;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(255, 143, 177, 0.15);
+}
+
+.todo-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff8fb1;
+  cursor: pointer;
+}
+
+.todo-text {
+  flex: 1;
+  word-break: break-all;
+}
+
+/* 날짜 배지: 클릭하면 해당 날짜만 보기 */
+.todo-date {
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  color: #9a8fb8;
+  white-space: nowrap;
+  background: #f4efff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.todo-date:hover {
+  background: #e6dcff;
+  color: #7a6a9a;
+}
+
+.btn-delete {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  color: #ff7a7a;
+  background: transparent;
+  border: 1px solid #ffd0d0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-delete:hover {
+  background: #ffecec;
+}
+
+/* 목록 아래 영역 */
+.todo-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.btn-clear-completed {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  color: #ff7a7a;
+  background: #ffffff;
+  border: 1px solid #ffd0d0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-clear-completed:hover:not(:disabled) {
+  background: #ffecec;
+}
+
+/* 지울 완료 항목이 없을 때 */
+.btn-clear-completed:disabled {
+  color: #d0c8dc;
+  border-color: #ece6f2;
+  cursor: default;
+}
+
+/* 완료된 항목은 취소선 표시 */
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: #b8b0c8;
+}

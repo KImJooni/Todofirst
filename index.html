@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나의 할 일 목록</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <h1 class="title">나의 할 일 목록</h1>
+
+    <!-- 할 일 입력 영역 -->
+    <form class="todo-form" id="todo-form">
+      <!-- 날짜 선택: 버튼을 누르면 숨겨진 date 입력의 달력 창을 연다 -->
+      <div class="date-picker">
+        <button type="button" id="date-button" class="btn-date">📅 <span id="date-label"></span></button>
+        <button type="button" id="filter-clear" class="btn-filter-clear" hidden>전체 보기</button>
+        <input type="date" id="date-input" class="date-input" tabindex="-1" aria-hidden="true">
+      </div>
+      <input
+        type="text"
+        id="todo-input"
+        class="todo-input"
+        placeholder="할 일을 입력하세요"
+        autocomplete="off"
+      >
+      <button type="submit" id="add-button" class="btn-add">추가</button>
+    </form>
+
+    <!-- 날짜 필터 상태 + 할 일 개수 표시 -->
+    <div class="todo-status">
+      <div class="filter-bar" id="filter-bar" hidden>
+        <span id="filter-label"></span>
+      </div>
+      <p class="todo-count" id="todo-count"></p>
+    </div>
+
+    <!-- 상태 필터: 전체 / 진행중 / 완료 -->
+    <div class="status-tabs">
+      <button type="button" class="btn-tab" data-status="all">전체</button>
+      <button type="button" class="btn-tab" data-status="active">진행중</button>
+      <button type="button" class="btn-tab" data-status="completed">완료</button>
+    </div>
+
+    <!-- 할 일 목록 영역 -->
+    <ul class="todo-list" id="todo-list"></ul>
+
+    <!-- 완료 항목 일괄 삭제 -->
+    <div class="todo-footer">
+      <button type="button" id="clear-completed" class="btn-clear-completed">완료된 항목 삭제</button>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
